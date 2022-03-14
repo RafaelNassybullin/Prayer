@@ -30,6 +30,8 @@ const Wrapper = styled(View)`
   position: relative;
   height: 65px;
   width: 100%;
+  border-bottom-color: #c6c6c6;
+  border-bottom-width: 1px;
 `
 const Title = styled(Text)`
   font-size: 22px;
