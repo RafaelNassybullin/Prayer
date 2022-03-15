@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styled from 'styled-components/native';
-import { IconSettings } from "../../assets/IconSettings";
+import { IconAdd } from "../../assets/IconAdd";
 
 interface IMainTitle {
 
@@ -14,20 +14,29 @@ interface IMainTitle {
 export const MainTitle: FC<IMainTitle> = () => {
   return (
     <Wrapper>
-      <Title>My Desc</Title>
-      <Add>
-        <IconSettings/>
-      </Add>
+      <Container>
+        <Title>My Desc</Title>
+        <Add>
+          <IconAdd width={23} height={23}/>
+        </Add>
+      </Container>
     </Wrapper>
   )
 }
-
 const Wrapper = styled(View)`
-  flex-direction: row;
-  display:flex;
-  align-items:center;
-  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  width: 100%;
+  z-index: 10;
+`
+const Container = styled(View)`
   position: relative;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 65px;
   width: 100%;
   border-bottom-color: #c6c6c6;
@@ -39,7 +48,6 @@ const Title = styled(Text)`
   color: black;
 `
 const Add = styled(TouchableOpacity)`
- position: absolute;
-  right: 15px;
-  
+  position: absolute;
+  right: 17px;
 `

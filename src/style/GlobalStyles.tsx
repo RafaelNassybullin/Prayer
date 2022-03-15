@@ -6,6 +6,7 @@ export const Wrapper = styled(View)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 70px;
+  
 `;
 
