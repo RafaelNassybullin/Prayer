@@ -1,12 +1,38 @@
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { Text, TextInput, View, SafeAreaView } from "react-native";
 
 export const Wrapper = styled(View)`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 70px;
-  
 `;
 
+export const InputWrap = styled(View)`
+  width: 93%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  border-radius: 10px;
+  border: 1px solid #c6c6c6;
+  background: white;
+  padding: 0 10px 0 15px;
+  margin-bottom: 15px;
+`
+
+export const Input = styled(TextInput)`
+  width: 90%;
+  font-size: 20px;
+`
+
+export const Container = styled(SafeAreaView)`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`
+export const Link = styled(Text)`
+  color: #2FA4FF;
+  font-size: 18px;
+`

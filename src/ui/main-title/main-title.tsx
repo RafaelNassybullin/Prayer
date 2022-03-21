@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import {
   Text,
   View,
@@ -6,18 +6,21 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 import { IconAdd } from "../../assets/IconAdd";
+import { AuthContext } from "./../../context/AuthContext";
 
 interface IMainTitle {
 
 }
 
 export const MainTitle: FC<IMainTitle> = () => {
+  const {openAddColumnHandler} = useContext(AuthContext)
+
   return (
     <Wrapper>
       <Container>
         <Title>My Desc</Title>
-        <Add>
-          <IconAdd width={23} height={23}/>
+        <Add onPress={openAddColumnHandler}>
+          <IconAdd width={26} height={26}/>
         </Add>
       </Container>
     </Wrapper>
@@ -50,4 +53,8 @@ const Title = styled(Text)`
 const Add = styled(TouchableOpacity)`
   position: absolute;
   right: 17px;
+  width: 40px;
+  height: 40px;
+  align-items:center;
+  justify-content:center;
 `

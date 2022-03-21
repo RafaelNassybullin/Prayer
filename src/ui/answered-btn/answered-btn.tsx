@@ -2,19 +2,20 @@ import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import { Text, TouchableOpacity } from 'react-native';
 
-interface IAnsweredBtn {}
+interface IAnsweredBtn{
+  press: ()=>void
+}
 
-export const AnsweredBtn: FC<IAnsweredBtn> = ({ children }) => {
+export const AnsweredBtn: FC<IAnsweredBtn> = ({press, children}) => {
   return (
-   <Button>
+   <Button onPress={press}>
        <Title>{children}</Title>
    </Button>
   );
 };
 
 const Button = styled(TouchableOpacity)`
-  margin: 10px 0;
-  margin: 20px 0;
+  margin: 10px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
