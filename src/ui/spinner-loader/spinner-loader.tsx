@@ -11,7 +11,7 @@ export const SpinnerLoader: FC<ISpinnerLoader> = ({visible}) => {
     <>
       {
         visible && <LoaderView>
-          <LoaderTitle>Загрузка...</LoaderTitle>
+          <LoaderTitle>Loading...</LoaderTitle>
         </LoaderView>
       }
     </>
@@ -34,3 +34,5 @@ const LoaderTitle = styled(Text)`
   font-size: 24px;
   color: black;
 `
+
+

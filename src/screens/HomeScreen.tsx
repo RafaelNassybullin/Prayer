@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Input, InputWrap, Wrapper } from "./../style/GlobalStyles";
 import styled from 'styled-components/native';
-import { AuthContext } from "./../context/AuthContext";
+import { AuthContext, IColumn } from "./../context/AuthContext";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
 import { MainTitle } from "./../ui/main-title/main-title";
 import { TodoItem } from "./../ui/todo-item/todo-item";
 
 export const HomeScreen = () => {
-  const {logout, userInfo, isLoading, addColumn} = useContext(AuthContext)
+  const {logout, userInfo, isLoading, addColumn, columns} = useContext(AuthContext)
 
   return (
     <View>
@@ -30,9 +30,9 @@ export const HomeScreen = () => {
 
         <ScrollView>
           <Wrapper>
-            <TodoItem>To do</TodoItem>
-            <TodoItem>In Progress</TodoItem>
-            <TodoItem>Completed</TodoItem>
+            {columns.map((column:IColumn)=>(
+              <TodoItem key={column.id}>{column.title}</TodoItem>
+            ))}
           </Wrapper>
         </ScrollView>
       </AreaView>

@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Text, TextInput, View, SafeAreaView } from "react-native";
+import { Text, TextInput, View, SafeAreaView, KeyboardAvoidingView } from "react-native";
 
 export const Wrapper = styled(View)`
   display: flex;
@@ -32,7 +32,16 @@ export const Container = styled(SafeAreaView)`
   align-items: center;
   justify-content: center;
 `
+
+export const AuthWrap = styled(KeyboardAvoidingView)`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`
+
 export const Link = styled(Text)`
   color: #2FA4FF;
   font-size: 18px;
 `
+
+

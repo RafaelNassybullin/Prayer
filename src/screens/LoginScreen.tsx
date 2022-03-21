@@ -2,13 +2,13 @@ import React, { useContext, FC } from "react";
 import {
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { AuthContext } from "./../context/AuthContext";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "components/Navigation";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
-import { Input, InputWrap, Link, Container } from "./../style/GlobalStyles";
+import { Input, InputWrap, Link, AuthWrap } from "./../style/GlobalStyles";
 import { useForm, Controller } from "react-hook-form";
 import { AnsweredBtn } from "./../ui/answered-btn/answered-btn";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,10 +45,10 @@ export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
   }
 
   return (
-    <Container>
+    <AuthWrap behavior="padding">
       <SpinnerLoader visible={isLoading}/>
       <Text style={{fontSize: 60}}>Prayer</Text>
-      <Text style={{fontSize: 24, marginBottom:20 }}>Sign-In</Text>
+      <Text style={{fontSize: 24, marginBottom: 20}}>Sign-In</Text>
 
       <View>
         {errors.email && <Text style={{color: 'red'}}>Email is not valid</Text>}
@@ -97,7 +97,7 @@ export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </Container>
+    </AuthWrap>
   );
 };
 

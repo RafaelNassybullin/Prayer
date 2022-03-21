@@ -8,7 +8,7 @@ import { AuthContext } from "./../context/AuthContext";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "components/Navigation";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
-import { Input, InputWrap, Link, Container } from "./../style/GlobalStyles";
+import { Input, InputWrap, Link, AuthWrap } from "./../style/GlobalStyles";
 import { useForm, Controller } from "react-hook-form";
 import { AnsweredBtn } from "./../ui/answered-btn/answered-btn";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,6 +17,12 @@ import * as yup from "yup";
 interface IRegisterScreen {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
 }
+
+type FormData = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 const registerValidation = yup.object().shape({
   name: yup.string().required(),
@@ -27,7 +33,7 @@ const registerValidation = yup.object().shape({
 export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
   const {register, isLoading, registerIsValid} = useContext(AuthContext)
 
-  const {control, handleSubmit, formState: {errors}} = useForm({
+  const {control, handleSubmit, formState: {errors}} = useForm<FormData>({
     defaultValues: {
       name: '',
       email: '',
@@ -36,15 +42,15 @@ export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
     resolver: yupResolver(registerValidation),
   });
 
-  const onSubmit = (data:any) => {
+  const onSubmit = (data: FormData) => {
     register(data.name, data.email, data.password)
   }
 
   return (
-    <Container>
+    <AuthWrap behavior="padding">
       <SpinnerLoader visible={isLoading}/>
       <Text style={{fontSize: 60}}>Prayer</Text>
-      <Text style={{fontSize: 24, marginBottom:20 }}>Sign-Up</Text>
+      <Text style={{fontSize: 24, marginBottom: 20}}>Sign-Up</Text>
       <View>
         {errors.name && <Text style={{color: 'red'}}>Name is empty</Text>}
         <Controller
@@ -104,13 +110,13 @@ export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
         {!!registerIsValid && <Text style={{color: 'red'}}>{registerIsValid}</Text>}
         <AnsweredBtn press={handleSubmit(onSubmit)}>Register</AnsweredBtn>
         <View style={{flexDirection: "row", marginTop: 20}}>
-          <Text style={{fontSize:18}}>Already have an account? </Text>
+          <Text style={{fontSize: 18}}>Already have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Link>Login</Link>
           </TouchableOpacity>
         </View>
       </View>
-    </Container>
+    </AuthWrap>
   );
 };
 
