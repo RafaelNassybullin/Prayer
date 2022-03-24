@@ -1,10 +1,9 @@
-import React, { useContext, FC } from "react";
+import React, { FC } from "react";
 import {
   Text,
   View,
   TouchableOpacity
 } from "react-native";
-import { AuthContext } from "./../context/AuthContext";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "components/Navigation";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
@@ -13,6 +12,9 @@ import { useForm, Controller } from "react-hook-form";
 import { AnsweredBtn } from "./../ui/answered-btn/answered-btn";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { registerRequired } from "./../store/slices/loginSlice";
+import { registerDataSelect, registerErrorSelect, registerLoadingSelect } from "./../store/selectors/loginSelector";
 
 interface IRegisterScreen {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
@@ -31,7 +33,14 @@ const registerValidation = yup.object().shape({
 });
 
 export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
-  const {register, isLoading, registerIsValid} = useContext(AuthContext)
+
+  const res = useSelector(registerDataSelect)
+  const registerIsValid = useSelector(registerErrorSelect)
+  const isLoading = useSelector(registerLoadingSelect)
+
+  const dispatch = useDispatch()
+
+  console.log(res, 'lojjj');
 
   const {control, handleSubmit, formState: {errors}} = useForm<FormData>({
     defaultValues: {
@@ -43,7 +52,7 @@ export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
   });
 
   const onSubmit = (data: FormData) => {
-    register(data.name, data.email, data.password)
+    dispatch(registerRequired(data))
   }
 
   return (
@@ -107,7 +116,7 @@ export const RegisterScreen: FC<IRegisterScreen> = ({navigation}) => {
           )}
           name="password"
         />
-        {!!registerIsValid && <Text style={{color: 'red'}}>{registerIsValid}</Text>}
+        {registerIsValid && <Text style={{color: 'red'}}>User with this email address already exists</Text>}
         <AnsweredBtn press={handleSubmit(onSubmit)}>Register</AnsweredBtn>
         <View style={{flexDirection: "row", marginTop: 20}}>
           <Text style={{fontSize: 18}}>Already have an account? </Text>

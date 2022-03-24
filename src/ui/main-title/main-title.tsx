@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import {
   Text,
   View,
@@ -6,20 +6,20 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 import { IconAdd } from "../../assets/IconAdd";
-import { AuthContext } from "./../../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { openColumnInput } from './../../store/slices/columnSlice';
 
 interface IMainTitle {
 
 }
 
 export const MainTitle: FC<IMainTitle> = () => {
-  const {openAddColumnHandler} = useContext(AuthContext)
-
+ const dispatch = useDispatch()
   return (
     <Wrapper>
       <Container>
         <Title>My Desc</Title>
-        <Add onPress={openAddColumnHandler}>
+        <Add onPress={()=>dispatch(openColumnInput())}>
           <IconAdd width={26} height={26}/>
         </Add>
       </Container>

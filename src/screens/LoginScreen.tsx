@@ -1,10 +1,9 @@
-import React, { useContext, FC } from "react";
+import React, { FC } from "react";
 import {
   Text,
   View,
   TouchableOpacity,
 } from "react-native";
-import { AuthContext } from "./../context/AuthContext";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "components/Navigation";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
@@ -13,6 +12,12 @@ import { useForm, Controller } from "react-hook-form";
 import { AnsweredBtn } from "./../ui/answered-btn/answered-btn";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginErrorSelect,
+  registerLoadingSelect
+} from "./../store/selectors/loginSelector";
+import { loginRequired } from "./../store/slices/loginSlice";
 
 interface ILoginScreen {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
@@ -29,7 +34,10 @@ const schema = yup.object().shape({
 });
 
 export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
-  const {login, isLoading, loginIsValid} = useContext(AuthContext)
+  const registerIsValid = useSelector(loginErrorSelect)
+  const isLoading = useSelector(registerLoadingSelect)
+
+  const dispatch = useDispatch()
 
   const {control, handleSubmit, formState: {errors}} = useForm<FormData>({
     defaultValues: {
@@ -40,8 +48,7 @@ export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
   });
 
   const onSubmit = (data: FormData) => {
-    login(data.email, data.password)
-    console.log(data)
+    dispatch(loginRequired(data))
   }
 
   return (
@@ -49,7 +56,6 @@ export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
       <SpinnerLoader visible={isLoading}/>
       <Text style={{fontSize: 60}}>Prayer</Text>
       <Text style={{fontSize: 24, marginBottom: 20}}>Sign-In</Text>
-
       <View>
         {errors.email && <Text style={{color: 'red'}}>Email is not valid</Text>}
         <Controller
@@ -88,7 +94,7 @@ export const LoginScreen: FC<ILoginScreen> = ({navigation}) => {
           )}
           name="password"
         />
-        {!!loginIsValid && <Text style={{color: 'red'}}>{loginIsValid}</Text>}
+        {registerIsValid && <Text style={{color: 'red'}}>Incorrect login or password</Text>}
         <AnsweredBtn press={handleSubmit(onSubmit)}>Login</AnsweredBtn>
         <View style={{flexDirection: "row", marginTop: 20}}>
           <Text style={{fontSize: 18}}>Don't have an account? </Text>

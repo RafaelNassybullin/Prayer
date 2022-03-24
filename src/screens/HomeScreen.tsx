@@ -1,40 +1,46 @@
-import React, { useContext } from "react";
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import { Input, InputWrap, Wrapper } from "./../style/GlobalStyles";
+import React from "react";
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { AuthContext, IColumn } from "./../context/AuthContext";
 import { SpinnerLoader } from "./../ui/spinner-loader/spinner-loader";
 import { MainTitle } from "./../ui/main-title/main-title";
-import { TodoItem } from "./../ui/todo-item/todo-item";
+import { useDispatch, useSelector } from "react-redux";
+import { registerDataSelect } from "./../store/selectors/loginSelector";
+import { logOut } from "./../store/slices/loginSlice";
+import { Input, InputWrap } from "./../style/GlobalStyles";
+import { openInputSelect } from "./../store/selectors/columnSelector";
 
 export const HomeScreen = () => {
-  const {logout, userInfo, isLoading, addColumn, columns} = useContext(AuthContext)
+  const userInfo = useSelector(registerDataSelect)
+  const addColumn = useSelector(openInputSelect)
+  const dispatch = useDispatch()
 
   return (
     <View>
-      <SpinnerLoader visible={isLoading}/>
+      <SpinnerLoader visible={false}/>
       <AreaView>
         <MainTitle/>
+
         <Profile>
           <Welcome>Welcome, {userInfo.name}!</Welcome>
-          <TouchableOpacity onPress={logout}>
+          <TouchableOpacity onPress={() => dispatch(logOut())}>
             <Text style={{color: 'crimson', fontSize: 17}}>LogOut</Text>
           </TouchableOpacity>
         </Profile>
 
-        {addColumn&&<AddColumn>
+        {addColumn && <AddColumn>
           <InputWrap>
             <Input placeholder="Add column..."/>
           </InputWrap>
         </AddColumn>}
 
-        <ScrollView>
-          <Wrapper>
-            {columns.map((column:IColumn)=>(
-              <TodoItem key={column.id}>{column.title}</TodoItem>
-            ))}
-          </Wrapper>
-        </ScrollView>
+        {/*<ScrollView>*/}
+        {/*  <Wrapper>*/}
+        {/*    {columns.map((column:IColumn)=>(*/}
+        {/*      <TodoItem key={column.id}>{column.title}</TodoItem>*/}
+        {/*    ))}*/}
+        {/*  </Wrapper>*/}
+        {/*</ScrollView>*/}
+
       </AreaView>
     </View>
   )
