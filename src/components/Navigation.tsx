@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerDataSelect } from "./../store/selectors/loginSelector";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isLoggedIn, splashScreen } from "./../store/slices/loginSlice";
+import { getColumnsRequire } from "./../store/slices/columnSlice";
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -19,6 +20,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Navigation = () => {
 
   const dispatch = useDispatch()
+  const authData = useSelector(registerDataSelect)
 
   const isLogged = async () => {
     try {
@@ -33,9 +35,17 @@ const Navigation = () => {
       console.log("is logged error", error);
     }
   };
+
   useEffect(() => {
     isLogged()
+dispatch(getColumnsRequire())
   }, []);
+
+  // useEffect(() => {
+  //
+  // }, [authData]);
+
+
 
   const userInfo = useSelector(registerDataSelect)
   const splashLoading = false

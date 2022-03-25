@@ -24,6 +24,7 @@ export const loginSlice = createSlice({
     registerRequired: (state, action: PayloadAction<any>) => {
       state.loading = true
       state.inputRequests = action.payload
+      state.error = false
     },
     registerSuccess: (state, action: PayloadAction<any>) => {
       state.registerDatas = action.payload
@@ -37,6 +38,7 @@ export const loginSlice = createSlice({
     loginRequired: (state, action: PayloadAction<any>) => {
       state.loading = true
       state.inputRequests = action.payload
+      state.error = false
     },
     loginSuccess: (state, action: PayloadAction<any>) => {
       state.registerDatas = action.payload
@@ -50,6 +52,7 @@ export const loginSlice = createSlice({
     logOut: (state) => {
       state.registerDatas = {} as IUser
       AsyncStorage.removeItem("userInfo");
+      AsyncStorage.removeItem("token");
     },
     isLoggedIn: (state, action) => {
       state.registerDatas = action.payload

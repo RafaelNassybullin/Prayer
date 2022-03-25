@@ -48,9 +48,7 @@ import axios from "axios";
 //   const [addColumn, setAddColumn] = useState<boolean>(false);
 //   const [columns, setColumns] = useState<IColumn[]>([])
 //
-//   const instance = axios.create({
-//     headers: {'Authorization': `Bearer ${userInfo.token}`}
-//   });
+
 //
 //   const register = (name: string, email: string, password: string) => {
 //     setIsLoading(true);
